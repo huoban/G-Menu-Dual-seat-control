@@ -1,0 +1,28 @@
+# 第三方商业软件安装包与运行库：版权归原厂所有，且体积过大，不随仓库分发。
+GMeun/
+decompiled/
+
+# 编译产物：源码可复现构建，不提交二进制。
+*.exe
+*.dll
+*.pdb
+*.obj
+*.ilk
+*.exp
+
+# 第三方资源与硬件枚举日志。
+*.pak
+*.asar
+*.ico
+7z2604-x64.exe
+USBViewAll.txt
+info.txt
+
+# 本地工具缓存与临时文件。
+.gitnexus/
+.work/
+aoc-lib.txt
+*.log
+*.bak
+Thumbs.db
+desktop.ini

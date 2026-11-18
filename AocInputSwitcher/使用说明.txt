@@ -1,0 +1,42 @@
+AOC AGON（AG275UXM2）输入源切换工具 —— 官方 RhHidAPI 版
+==========================================================
+
+经 USB 上行线控制显示器，走与官方 G-Menu 完全相同的物理通道
+（MI_02 HID，调用官方 RhHidAPI.dll，DDC/CI VCP 0x60）。
+
+说明：真机已证实 MI_00 的 winusb 接口只是“Light FX 灯效控制器”，
+不能切输入源；输入源切换只能走 MI_02 HID，故本版本使用官方 RhHidAPI。
+
+文件（务必保持在同一目录，缺一不可）：
+  AocInputSwitcher.exe   32 位主程序（x86）
+  RhHidAPI.dll           官方 32 位原生库（必须与 exe 同目录）
+  Program.cs             全部源码
+  协议说明.md            协议、设备拓扑、调用链、错误码与排查说明
+
+第一步（重要）：先跑诊断
+  在【接显示器的这台电脑】，把显示器 USB 上行线接好，
+  完全退出 G-Menu（含后台托盘进程），然后在本目录打开命令行：
+      AocInputSwitcher.exe diag
+  建议把整段输出复制保存。它会逐个设备节点打印
+  RH_OpenHid / RH_HidI2CConfig / Write / Read 的返回码与原始应答。
+
+交互使用：
+  双击 AocInputSwitcher.exe，按菜单选 1~5：
+    1) HDMI1   2) HDMI2   3) DP1   4) DP2   5) 查询当前输入源
+
+命令行：
+  AocInputSwitcher.exe hdmi1
+  AocInputSwitcher.exe hdmi2
+  AocInputSwitcher.exe dp1
+  AocInputSwitcher.exe dp2
+  AocInputSwitcher.exe query
+
+前提：
+  - 显示器 USB 上行线已连接本机；
+  - RhHidAPI.dll 与 AocInputSwitcher.exe 在同一目录；
+  - 本程序是 32 位（diag 顶部应显示“进程位数：32 位”）；
+  - 若提示占用/拒绝访问：退出 G-Menu 托盘，或右键“以管理员身份运行”。
+
+若 diag 失败：
+  把每个 DevInst 的“Open 句柄 / Config 返回码 / Write 返回码 /
+  Read 返回码 / 32 字节原始数据”整段反馈即可定位。
